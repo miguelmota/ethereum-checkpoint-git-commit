@@ -12,7 +12,7 @@ contract('Contracts', (accounts) => {
   context('MerkleProof', () => {
     describe('merkle proofs', () => {
 
-      it.only('should add commit to contract', async () => {
+      it('should add commit to contract', async () => {
         const tx  = await contract.checkpoint({
           tree: '00dd089c310aea2b821d23ea0f1a6a6235ad165c',
           parents: [
@@ -61,12 +61,10 @@ H7510dWvJLLZ7w1r78UWdyiT4DH5xRuqQJ8F7erOmtPw5lCmKto=
           '1553c75a1d637961827f4904a0955e57915d8310',
         ].map(x => Buffer.from(x, 'hex'))
 
-        const tree = new MerkleTree(leaves, sha1, {
-          sort: true
-        })
+        const tree = new MerkleTree(leaves, sha1, { sort: true })
 
         const root = tree.getHexRoot()
-        const leaf = leaves[0]
+        const leaf = Buffer.from('32f04c7f572bf75a266268c6f4d8c92731dc3b7f', 'hex')
         const proof = tree.getHexProof(leaf)
 
         assert.equal(tree.verify(proof, leaf, root), true)

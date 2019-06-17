@@ -100,12 +100,10 @@ const leaves = [
   '1553c75a1d637961827f4904a0955e57915d8310',
 ].map(x => Buffer.from(x, 'hex'))
 
-const tree = new MerkleTree(leaves, sha1, {
-  sort: true
-})
+const tree = new MerkleTree(leaves, sha1, { sort: true })
 
 const root = tree.getHexRoot()
-const leaf = leaves[0]
+const leaf = Buffer.from('32f04c7f572bf75a266268c6f4d8c92731dc3b7f', 'hex')
 const proof = tree.getHexProof(leaf)
 
 const verified = await contract.verify.call(root, leaf, proof)
