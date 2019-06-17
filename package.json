@@ -1,0 +1,19 @@
+{
+  "name": "git-checkpoint-ethereum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "merkletreejs": "^0.1.6",
+    "sha1": "^1.1.1",
+    "standard": "^12.0.1"
+  }
+}
