@@ -4,6 +4,10 @@
 
 [![status-experimental](https://img.shields.io/badge/status-experimental-orange.svg)](https://github.com/miguelmota/git-checkpoint-ethereum)
 
+## What's this and why?
+
+This is an Ethereum smart contract that allows anyone to checkpoint a commit hash by submitting the commit object data to the smart contract through a transaction. The commit is only accepted if the date of the commit submitted is within a day's range from the current block time. Anyone can then prove that a commit has existed after or before a date by providing a Merkle tree of all the commits under the checkpointed commit.
+
 ## Example
 
 Print git commit object:

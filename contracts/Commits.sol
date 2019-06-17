@@ -6,7 +6,7 @@ import "./SHA1.sol";
 contract Commits {
   mapping (bytes20 => uint256) public checkpoints;
 
-  event Checkpointed(bytes20 indexed commit);
+  event Checkpointed(address indexed sender, bytes20 indexed commit);
 
   struct Commit {
     string tree;
@@ -24,6 +24,9 @@ contract Commits {
   function checkpoint(
     Commit calldata _commit
   ) external returns (bytes20 commitHash) {
+    require(_commit.commitDate <= now + 24 hours);
+    require(_commit.commitDate > now - 24 hours);
+
     string memory treeStr = concat("tree ", _commit.tree, "\n", "", "", "", "");
 
     string memory parentsStr;
@@ -45,9 +48,22 @@ contract Commits {
     string memory data = concat(treeStr, parentsStr, authorStr, committerStr, signatureStr, messageStr, "");
 
     commitHash = SHA1.sha1(abi.encodePacked("commit ", uint2str(strsize(data)), byte(0), data));
+
+    require(checkpoints[commitHash] == 0);
     checkpoints[commitHash] = _commit.commitDate;
 
-    emit Checkpointed(commitHash);
+    emit Checkpointed(msg.sender, commitHash);
+  }
+
+  function checkpointed(bytes20 commit) public view returns (bool) {
+
+    return checkpoints[commit] != 0;
+  }
+
+  function checkpointVerify(bytes20 commit, bytes20 root, bytes20 leaf, bytes20[] memory proof) public view returns (bool) {
+
+    require(checkpoints[commit] != 0);
+    return verify(root, leaf, proof);
   }
 
   function verify(bytes20 root, bytes20 leaf, bytes20[] memory proof) public pure returns (bool) {

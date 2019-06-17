@@ -9,8 +9,8 @@ contract('Contracts', (accounts) => {
     contract = await Commits.new()
   })
 
-  context('MerkleProof', () => {
-    describe('merkle proofs', () => {
+  context('Commits', () => {
+    describe('Checkpoint', () => {
 
       it('should add commit to contract', async () => {
         const tx  = await contract.checkpoint({
