@@ -30,7 +30,7 @@ require('dotenv').config()
 const PrivateKeyProvider = require('truffle-privatekey-provider')
 
 const privateKey = process.env.PRIVATE_KEY
-const providerUri = 'https://kovan.infura.io/v3/e40bbc8b768643668cfee8eef2469487'
+const providerUri = process.env.PROVIDER_URI || 'https://kovan.infura.io/'
 
 module.exports = {
   /**
@@ -48,7 +48,7 @@ module.exports = {
       provider: () => new PrivateKeyProvider(privateKey, providerUri),
       network_id: '42',
       gas: 5712383,
-      gasPrice: 20000000000
+      gasPrice: 5000000000
     }
 
     // Useful for testing. The `development` name is special - truffle uses it by default
