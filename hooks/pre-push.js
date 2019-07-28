@@ -4,6 +4,7 @@ const path = require('path')
 const { execSync } = require('child_process')
 const Web3 = require('web3')
 const PrivateKeyProvider = require('truffle-privatekey-provider')
+const parseCommit = require('git-parse-commit')
 
 const contractJSON = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../build/contracts/Commits.json')))
 const { abi } = contractJSON
@@ -18,15 +19,17 @@ const web3 = new Web3(provider)
 ;(async () => {
   const { address: sender } = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
 
-  const parseCommit = require('git-parse-commit')
   const commit = execSync('git cat-file -p HEAD').toString().trim()
   const commitHash = execSync('git rev-parse HEAD').toString().trim()
   const tag = execSync('git describe --tags `git rev-list --tags --max-count=1`').toString().trim()
   const tagCommit = execSync(`git rev-list -n 1 "${tag}"`).toString().trim()
 
   if (tagCommit !== commitHash) {
+    console.log('Tag not found for commit, skipping checkpoint.')
     process.exit(0)
   }
+
+  console.log(`Tag ${tag} found, checkpointing commit ${commitHash}`)
 
   const {
     tree,
