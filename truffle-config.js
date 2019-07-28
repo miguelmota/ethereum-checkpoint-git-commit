@@ -24,6 +24,14 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+
+require('dotenv').config()
+
+const PrivateKeyProvider = require('truffle-privatekey-provider')
+
+const privateKey = process.env.PRIVATE_KEY
+const providerUri = 'https://kovan.infura.io/v3/e40bbc8b768643668cfee8eef2469487'
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -36,6 +44,13 @@ module.exports = {
    */
 
   networks: {
+    kovan: {
+      provider: () => new PrivateKeyProvider(privateKey, providerUri),
+      network_id: '42',
+      gas: 5712383,
+      gasPrice: 20000000000
+    }
+
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
@@ -84,16 +99,17 @@ module.exports = {
 
   // Configure your compilers
   compilers: {
+    /*
     solc: {
-      // version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
-      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
-      //  evmVersion: "byzantium"
-      // }
+      version: "0.5.2",
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 200
+        },
+        //evmVersion: "byzantium"
+      }
     }
+    */
   }
 }

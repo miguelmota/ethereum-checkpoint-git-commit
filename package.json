@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "truffle test"
+    "test": "truffle test",
+    "build": "truffle compile",
+    "deploy:kovan": "truffle migrate --network=kovan"
   },
   "author": "",
   "license": "MIT",
@@ -15,5 +17,11 @@
     "merkletreejs": "^0.1.6",
     "sha1": "^1.1.1",
     "standard": "^12.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "moment": "^2.24.0",
+    "truffle": "^5.0.29",
+    "truffle-privatekey-provider": "^1.3.0"
   }
 }

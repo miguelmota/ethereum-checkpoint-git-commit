@@ -1,6 +1,21 @@
 const Commits = artifacts.require('Commits')
 const { MerkleTree } = require('merkletreejs')
 const sha1 = require('sha1')
+const moment = require('moment')
+
+const mine = (timestamp) => {
+  return new Promise((resolve, reject) => {
+    web3.currentProvider.send({
+      jsonrpc: '2.0',
+      method: 'evm_mine',
+      id: Date.now(),
+      params: [timestamp],
+    }, (err, res) => {
+      if (err) return reject(err)
+      resolve(res)
+    })
+  })
+}
 
 contract('Contracts', (accounts) => {
   let contract
@@ -13,6 +28,10 @@ contract('Contracts', (accounts) => {
     describe('Checkpoint', () => {
 
       it('should add commit to contract', async () => {
+        // set evm blocktime to 10 hours after commit date in test
+        const ts = moment.unix(1560727622).add(10, 'hours').unix()
+        await mine(ts)
+
         const tx  = await contract.checkpoint({
           tree: '00dd089c310aea2b821d23ea0f1a6a6235ad165c',
           parents: [
