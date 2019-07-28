@@ -5,4 +5,6 @@ node_modules/
 .env
 *.env
 
+scratch.js
+
 demo
