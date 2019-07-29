@@ -77,10 +77,14 @@ ${pgp}
 
   try {
     console.log('Checkpointing commit to Ethereum...')
-    const { status } = await contract.methods.checkpoint(data).send({
+    const {
+      status,
+      transactionHash
+    } = await contract.methods.checkpoint(data).send({
       from: sender
     })
 
+    console.log(`Transaction hash: ${transactionHash}`)
     assert.ok(status)
 
     const _commitDate = await contract.methods.checkpoints(`0x${commitHash}`).call()

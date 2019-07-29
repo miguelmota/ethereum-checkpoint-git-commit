@@ -1,4 +1,4 @@
-# git-checkpoint-ethereum
+# ethereum-checkpoint-git-commit
 
 > Checkpoint git commits to an Ethereum smart contract and verify commits as Merkle tree
 
@@ -7,6 +7,8 @@
 ## What's this and why?
 
 This is an Ethereum smart contract that allows anyone to checkpoint a commit hash by submitting the commit object data to the smart contract through a transaction. The commit is only accepted if the date of the commit submitted is within a day's range from the current block time. Anyone can then prove that a commit has existed after or before a date by providing a Merkle tree of all the commits under the checkpointed commit.
+
+Blog post: [https://miguelmota.com/blog/checkpoint-git-commit-objects-to-ethereum-and-verify-with-merkle-proofs/](https://miguelmota.com/blog/checkpoint-git-commit-objects-to-ethereum-and-verify-with-merkle-proofs/)
 
 ## Example
 
