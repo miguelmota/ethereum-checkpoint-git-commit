@@ -55,10 +55,15 @@ const web3 = new Web3(provider)
   const committer = `${committerName} <${committerEmail}>`
   const message = `${title}${description}
 `
-  const signature = `-----BEGIN PGP SIGNATURE-----
+
+  let signature = ''
+  if (pgp) {
+    // NOTE: newlines are necessary here
+    signature = `-----BEGIN PGP SIGNATURE-----
 
 ${pgp}
 -----END PGP SIGNATURE-----`.split('\n').join('\n ') + '\n'
+  }
 
   const data = {
     tree,
